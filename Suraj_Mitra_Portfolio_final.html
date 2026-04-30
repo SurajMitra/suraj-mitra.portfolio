@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Suraj Mitra — Full-Stack Engineer | Java • Spring Boot • Angular • Microservices</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #141414;
+    --ink-light: #555;
+    --ink-muted: #999;
+    --accent: #1D5FA8;
+    --accent-light: #EAF1FA;
+    --bg: #FAFAF8;
+    --line: #E5E5E0;
+    --white: #fff;
+    --serif: 'DM Serif Display', Georgia, serif;
+    --sans: 'DM Sans', system-ui, sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--sans);
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 15px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 0 5vw;
+    height: 60px;
+    background: rgba(250,250,248,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-name { font-family: var(--serif); font-size: 17px; color: var(--ink); letter-spacing: -0.3px; }
+  .nav-links { display: flex; gap: 2rem; }
+  .nav-links a { text-decoration: none; color: var(--ink-light); font-size: 13px; font-weight: 500; letter-spacing: 0.3px; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--accent); }
+
+  /* ── SECTIONS ── */
+  section { padding: 90px 5vw; }
+  .container { max-width: 860px; margin: 0 auto; }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    padding-top: 120px;
+    background: var(--white);
+    border-bottom: 1px solid var(--line);
+  }
+  .hero-inner { max-width: 860px; margin: 0 auto; }
+  .hero-tag {
+    display: inline-block;
+    font-size: 11px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--accent); background: var(--accent-light);
+    padding: 4px 12px; border-radius: 20px;
+    margin-bottom: 2rem;
+    opacity: 0; animation: fadeUp 0.6s 0.1s forwards;
+  }
+  .hero-name {
+    font-family: var(--serif);
+    font-size: clamp(48px, 7vw, 80px);
+    line-height: 1.05;
+    letter-spacing: -2px;
+    color: var(--ink);
+    margin-bottom: 1.5rem;
+    opacity: 0; animation: fadeUp 0.6s 0.2s forwards;
+  }
+  .hero-name em { font-style: italic; color: var(--accent); }
+  .hero-desc {
+    font-size: 17px; font-weight: 300; color: var(--ink-light);
+    max-width: 560px; line-height: 1.8;
+    margin-bottom: 2.5rem;
+    opacity: 0; animation: fadeUp 0.6s 0.3s forwards;
+  }
+  .hero-meta {
+    display: flex; flex-wrap: wrap; gap: 1.5rem; align-items: center;
+    opacity: 0; animation: fadeUp 0.6s 0.4s forwards;
+  }
+  .hero-contact { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .contact-pill {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 13px; color: var(--ink-light);
+    background: var(--bg); border: 1px solid var(--line);
+    padding: 6px 14px; border-radius: 20px; text-decoration: none;
+    transition: all 0.2s;
+  }
+  .contact-pill:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-light); }
+  .contact-pill svg { width: 13px; height: 13px; }
+
+  /* ── SECTION HEADER ── */
+  .section-label {
+    font-size: 11px; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 0.5rem;
+  }
+  .section-title {
+    font-family: var(--serif);
+    font-size: clamp(28px, 4vw, 40px);
+    letter-spacing: -1px; color: var(--ink);
+    margin-bottom: 3rem;
+    padding-bottom: 1.2rem;
+    border-bottom: 1px solid var(--line);
+  }
+
+  /* ── EXPERIENCE ── */
+  #experience { background: var(--bg); }
+  .exp-item { display: grid; grid-template-columns: 200px 1fr; gap: 2.5rem; padding: 2.5rem 0; border-bottom: 1px solid var(--line); }
+  .exp-item:last-child { border-bottom: none; }
+  .exp-left {}
+  .exp-period { font-size: 12px; color: var(--ink-muted); font-weight: 500; letter-spacing: 0.3px; margin-bottom: 0.4rem; }
+  .exp-company { font-size: 13px; font-weight: 600; color: var(--accent); }
+  .exp-loc { font-size: 12px; color: var(--ink-muted); margin-top: 2px; }
+  .exp-role { font-family: var(--serif); font-size: 20px; letter-spacing: -0.5px; color: var(--ink); margin-bottom: 1rem; }
+  .exp-bullets { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+  .exp-bullets li { font-size: 14px; color: var(--ink-light); padding-left: 1.2rem; position: relative; }
+  .exp-bullets li::before { content: "—"; position: absolute; left: 0; color: var(--accent); font-weight: 600; }
+
+  /* ── PROJECTS ── */
+  #projects { background: var(--white); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; }
+  .project-card {
+    background: var(--bg); border: 1px solid var(--line);
+    border-radius: 12px; padding: 2rem;
+    transition: all 0.25s; cursor: default;
+  }
+  .project-card:hover { border-color: var(--accent); transform: translateY(-3px); box-shadow: 0 8px 30px rgba(29,95,168,0.08); }
+  .project-icon { font-size: 28px; margin-bottom: 1rem; }
+  .project-name { font-family: var(--serif); font-size: 19px; letter-spacing: -0.4px; color: var(--ink); margin-bottom: 0.5rem; }
+  .project-desc { font-size: 13.5px; color: var(--ink-light); line-height: 1.7; margin-bottom: 1.2rem; }
+  .project-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .tag { font-size: 11px; font-weight: 500; padding: 3px 10px; border-radius: 20px; background: var(--accent-light); color: var(--accent); letter-spacing: 0.2px; }
+  .project-metrics { margin-bottom: 1rem; }
+  .metric { display: inline-block; font-size: 12px; font-weight: 600; color: var(--accent); background: var(--accent-light); padding: 2px 10px; border-radius: 10px; margin-right: 6px; margin-bottom: 4px; }
+
+  /* ── SKILLS ── */
+  #skills { background: var(--bg); }
+  .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; }
+  .skill-group { background: var(--white); border: 1px solid var(--line); border-radius: 12px; padding: 1.5rem; }
+  .skill-group-title { font-size: 11px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; }
+  .skill-list { display: flex; flex-wrap: wrap; gap: 6px; }
+  .skill-chip { font-size: 12.5px; color: var(--ink-light); background: var(--bg); border: 1px solid var(--line); padding: 4px 10px; border-radius: 6px; }
+
+  /* ── EXPERTISE ── */
+  .expertise-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.2rem; }
+  .expertise-card {
+    background: var(--white); border: 1px solid var(--line);
+    border-radius: 12px; padding: 1.4rem 1.2rem;
+    transition: all 0.22s;
+  }
+  .expertise-card:hover { border-color: var(--accent); transform: translateY(-3px); box-shadow: 0 8px 24px rgba(29,95,168,0.08); }
+  .expertise-icon { font-size: 22px; margin-bottom: 0.6rem; }
+  .expertise-name { font-weight: 600; font-size: 13.5px; color: var(--ink); margin-bottom: 0.4rem; }
+  .expertise-desc { font-size: 12.5px; color: var(--ink-light); line-height: 1.6; }
+  .expertise-featured {
+    border-color: var(--accent) !important;
+    background: var(--accent-light) !important;
+    grid-column: span 2;
+  }
+  .expertise-featured:hover { box-shadow: 0 8px 28px rgba(29,95,168,0.15) !important; }
+  .exp-tag {
+    font-size: 11px; font-weight: 600; padding: 3px 10px;
+    border-radius: 20px; background: var(--white);
+    color: var(--accent); border: 1px solid var(--accent);
+    display: inline-block;
+  }
+  @media (max-width: 900px) { .expertise-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 480px) { .expertise-grid { grid-template-columns: 1fr 1fr; } }
+
+  /* ── STATS ── */
+  #stats { background: var(--ink); color: var(--white); }
+  #stats .section-label { color: #6aaee8; }
+  #stats .section-title { color: var(--white); border-bottom-color: rgba(255,255,255,0.1); }
+  .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; }
+  .stat-item { text-align: center; padding: 2rem 1rem; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; }
+  .stat-number { font-family: var(--serif); font-size: 44px; color: #6aaee8; letter-spacing: -2px; line-height: 1; margin-bottom: 0.5rem; }
+  .stat-label { font-size: 13px; color: rgba(255,255,255,0.5); letter-spacing: 0.3px; }
+
+  /* ── ABOUT ── */
+  #about { background: var(--white); border-top: 1px solid var(--line); }
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+  .about-text { font-size: 16px; font-weight: 300; color: var(--ink-light); line-height: 1.9; }
+  .about-text p + p { margin-top: 1.2rem; }
+  .about-details {}
+  .detail-row { display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 0; border-bottom: 1px solid var(--line); font-size: 13.5px; }
+  .detail-key { color: var(--ink-muted); font-weight: 500; }
+  .detail-val { color: var(--ink); font-weight: 500; }
+  .detail-val.green { color: #2E7D32; background: #E8F5E9; padding: 2px 10px; border-radius: 10px; }
+
+  /* ── EDUCATION ── */
+  #education { background: var(--bg); border-top: 1px solid var(--line); }
+  .edu-card { background: var(--white); border: 1px solid var(--line); border-radius: 12px; padding: 2rem; display: flex; gap: 2rem; align-items: flex-start; }
+  .edu-year { font-size: 12px; color: var(--ink-muted); font-weight: 500; white-space: nowrap; padding-top: 4px; }
+  .edu-degree { font-family: var(--serif); font-size: 20px; letter-spacing: -0.5px; color: var(--ink); margin-bottom: 4px; }
+  .edu-university { font-size: 13px; color: var(--accent); font-weight: 600; }
+  .edu-location { font-size: 13px; color: var(--ink-muted); }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 2.5rem 5vw;
+    border-top: 1px solid var(--line);
+    background: var(--white);
+    display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;
+  }
+  footer p { font-size: 13px; color: var(--ink-muted); }
+  .footer-links { display: flex; gap: 1.5rem; }
+  .footer-links a { font-size: 13px; color: var(--ink-muted); text-decoration: none; }
+  .footer-links a:hover { color: var(--accent); }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* scroll reveal */
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.55s ease, transform 0.55s ease; }
+  .reveal.visible { opacity: 1; transform: none; }
+
+  @media (max-width: 640px) {
+    .exp-item { grid-template-columns: 1fr; gap: 0.5rem; }
+    .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    .nav-links { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <span class="nav-name">Suraj Mitra</span>
+  <div class="nav-links">
+    <a href="#experience">Experience</a>
+    <a href="#projects">Projects</a>
+    <a href="#skills">Skills</a>
+    <a href="#about">About</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-inner">
+    <h1 class="hero-name">Suraj<br/><em>Mitra</em></h1>
+    <div class="hero-desc">
+  <p>Full-Stack Engineer | Java • Spring Boot • Angular • Microservices</p>
+
+  <p>I build scalable backend systems, production-ready APIs, and modern Angular applications.</p>
+
+  <p>With 6+ years of experience across enterprise platforms, I specialize in performance optimization, microservices architecture, and reliable end-to-end delivery.</p>
+
+  <p>Open to impactful engineering roles where I can contribute to scalable systems and strong architecture.</p>
+</div>
+    <div class="hero-meta">
+      <div class="hero-contact">
+        <a href="mailto:mitrasuraj.1996@gmail.com" class="contact-pill">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+          mitrasuraj.1996@gmail.com
+        </a>
+        <a href="tel:+918595635434" class="contact-pill">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.15 12 19.79 19.79 0 0 1 1.08 3.4 2 2 0 0 1 3.06 1.2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.09 9.1a16 16 0 0 0 5.81 5.81l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          +91-8595635434
+        </a>
+        <a href="https://www.linkedin.com/in/suraj-mitra-062046106/" class="contact-pill">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          LinkedIn
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CORE EXPERTISE -->
+<section id="expertise" style="background:var(--bg); border-bottom:1px solid var(--line); padding: 70px 5vw;">
+  <div class="container">
+    <div class="section-label">What I Do</div>
+    <div class="section-title" style="margin-bottom:2rem;">Core Expertise</div>
+    <div class="expertise-grid reveal">
+      <div class="expertise-card">
+        <div class="expertise-icon">⚙️</div>
+        <div class="expertise-name">Backend API Development</div>
+        <div class="expertise-desc">Designing and building robust, secure REST APIs with Spring Boot that scale under production load.</div>
+      </div>
+      <div class="expertise-card">
+        <div class="expertise-icon">🧩</div>
+        <div class="expertise-name">Spring Boot Microservices</div>
+        <div class="expertise-desc">Building distributed systems with service isolation, resilience patterns, and event-driven communication.</div>
+      </div>
+      <div class="expertise-card">
+        <div class="expertise-icon">🖥️</div>
+        <div class="expertise-name">Angular Development</div>
+        <div class="expertise-desc">Building responsive, performant enterprise UIs with Angular, RxJS, and Angular Material.</div>
+      </div>
+      <div class="expertise-card">
+        <div class="expertise-icon">🚀</div>
+        <div class="expertise-name">Performance Optimization</div>
+        <div class="expertise-desc">Identifying and fixing bottlenecks using Dynatrace APM — cutting API latency and improving throughput.</div>
+      </div>
+      <div class="expertise-card">
+        <div class="expertise-icon">🗄️</div>
+        <div class="expertise-name">SQL Optimization</div>
+        <div class="expertise-desc">Tuning complex Oracle/MySQL queries on 1M+ row datasets — indexes, execution plans, and query rewrites.</div>
+      </div>
+      <div class="expertise-card expertise-featured">
+        <div style="display:flex; align-items:flex-start; gap: 1.2rem;">
+          <div style="font-size:36px; line-height:1;">🏗️</div>
+          <div>
+            <div class="expertise-name" style="font-size:15px; color:var(--accent); margin-bottom:0.5rem;">System Design & Data Pipeline Architecture</div>
+            <div class="expertise-desc" style="font-size:13px; margin-bottom:0.9rem;">Developed and configured an Apache NiFi pipeline processing <strong>10,000+ product &amp; catalog records daily</strong> — handling ingestion, transformation, routing, and delivery across systems with real-time monitoring.</div>
+            <div style="display:flex; flex-wrap:wrap; gap:6px;">
+              <span class="exp-tag">Apache NiFi</span>
+              <span class="exp-tag">10K+ Records/Day</span>
+              <span class="exp-tag">Real-time Monitoring</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="expertise-card">
+        <div class="expertise-icon">🔁</div>
+        <div class="expertise-name">CI/CD Pipelines</div>
+        <div class="expertise-desc">Building automated build, test, and deploy pipelines with Jenkins, SonarQube, and UrbanCode Deploy.</div>
+      </div>
+      <div class="expertise-card">
+        <div class="expertise-icon">🛡️</div>
+        <div class="expertise-name">Production Support</div>
+        <div class="expertise-desc">Diagnosing and resolving critical production issues fast — from payload failures to auth timeouts.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section id="stats">
+  <div class="container">
+    <div class="section-label">By the numbers</div>
+    <div class="section-title">Impact at a Glance</div>
+    <div class="stats-grid reveal">
+      <div class="stat-item">
+        <div class="stat-number">6+</div>
+        <div class="stat-label">Years of Experience</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">1M+</div>
+        <div class="stat-label">Monthly Events Handled</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">99%</div>
+        <div class="stat-label">Upload Success Rate (from 70%)</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">3</div>
+        <div class="stat-label">Companies Worked At</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="container">
+    <div class="section-label">Career</div>
+    <div class="section-title">Work Experience</div>
+
+    <div class="exp-item reveal">
+      <div class="exp-left">
+        <div class="exp-period">Jul 2025 — Present</div>
+        <div class="exp-company">Perficient, Inc.</div>
+        <div class="exp-loc">Bangalore, India</div>
+      </div>
+      <div class="exp-right">
+        <div class="exp-role">Senior Technical Consultant</div>
+        <ul class="exp-bullets">
+          <li>Developed and improved a scalable Customer Loyalty & Tier Management platform handling real-time evaluation and batch requalification for 1M+ monthly user events, reducing processing latency by 35%.</li>
+          <li>Built and led data ingestion pipelines using Apache NiFi — 3 pipelines with real-time monitoring.</li>
+          <li>Drove OAuth2/OIDC security design with Keycloak across microservices, enforcing RBAC and token validation.</li>
+          <li>Optimised Oracle SQL queries on 1M+ row datasets, improving report generation time by 60%.</li>
+          <li>Integrated Matomo analytics end-to-end, driving a 20% improvement in customer journey conversion.</li>
+          <li>Mentored 2 junior developers on microservices design patterns and CI/CD best practices.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="exp-item reveal">
+      <div class="exp-left">
+        <div class="exp-period">Jan 2022 — Jul 2025</div>
+        <div class="exp-company">Accenture</div>
+        <div class="exp-loc">Bangalore, India</div>
+      </div>
+      <div class="exp-right">
+        <div class="exp-role">Application Development Analyst</div>
+        <ul class="exp-bullets">
+          <li>Led development of damaged order workflows (Spring Boot + Angular) reducing issue resolution time by 40%.</li>
+          <li>Re-engineered bulk image upload API — cut payload size 40–60%, lifted success rate from 70% to 99%.</li>
+          <li>Used Dynatrace APM to identify bottlenecks, reducing p95 API latency by 45%.</li>
+          <li>Built and maintained CI/CD pipelines with Jenkins, UrbanCode Deploy, and SonarQube quality gates.</li>
+          <li>Delivered end-to-end Angular inbound UI adopted by 30+ warehouse operators across sites in the United States.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="exp-item reveal">
+      <div class="exp-left">
+        <div class="exp-period">Jan 2020 — Jan 2022</div>
+        <div class="exp-company">Bellurbis Technologies</div>
+        <div class="exp-loc">Gurgaon, Haryana</div>
+      </div>
+      <div class="exp-right">
+        <div class="exp-role">Junior Developer</div>
+        <ul class="exp-bullets">
+          <li>Co-developed an Angular + Spring Boot Battery Management System (BMS) with real-time Angular Material dashboards displaying current battery status, voltage, temperature, and nearby charging station locations.</li>
+          <li>Built Angular Material dashboards showing live battery status, voltage, temperature readings, and nearby charging station availability — reducing manual inspection by 30%.</li>
+          <li>Participated in architecture discussions and sprint planning for a 6-person cross-functional team.</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="container">
+    <div class="section-label">Work</div>
+    <div class="section-title">Key Projects</div>
+    <div class="projects-grid">
+
+      <div class="project-card reveal">
+        <div class="project-icon">🏆</div>
+        <div class="project-name">Customer Loyalty & Tier Management</div>
+        <div class="project-metrics">
+          <span class="metric">1M+ events/mo</span>
+          <span class="metric">−35% latency</span>
+        </div>
+        <div class="project-desc">Developed a real-time tier evaluation engine + batch requalification system with end-to-end Matomo analytics instrumentation. Improved customer retention KPIs by 20%.</div>
+        <div class="project-tags">
+          <span class="tag">Spring Boot</span><span class="tag">Apache NiFi</span><span class="tag">Keycloak</span><span class="tag">Oracle SQL</span><span class="tag">Matomo</span>
+        </div>
+      </div>
+
+      <div class="project-card reveal">
+        <div class="project-icon">📦</div>
+        <div class="project-name">Warehouse Receiving & Pallet Layout</div>
+        <div class="project-metrics">
+          <span class="metric">70% → 99% uploads</span>
+          <span class="metric">30+ users</span>
+        </div>
+        <div class="project-desc">Re-engineered bulk image upload API (byte stream conversion), cutting payload size 40–60%. Delivered complete Angular inbound UI across distribution sites in the United States.</div>
+        <div class="project-tags">
+          <span class="tag">Spring Boot</span><span class="tag">Angular</span><span class="tag">Dynatrace</span><span class="tag">Jenkins</span>
+        </div>
+      </div>
+
+      <div class="project-card reveal">
+        <div class="project-icon">🔋</div>
+        <div class="project-name">Battery Management System</div>
+        <div class="project-metrics">
+          <span class="metric">100+ nodes</span>
+          <span class="metric">−30% manual checks</span>
+        </div>
+        <div class="project-desc">Angular Material dashboards displaying live battery status, voltage, temperature, and nearby charging station locations — built for real-time field monitoring.</div>
+        <div class="project-tags">
+          <span class="tag">Angular Material</span><span class="tag">Spring Boot</span><span class="tag">REST APIs</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="container">
+    <div class="section-label">Expertise</div>
+    <div class="section-title">Technical Skills</div>
+    <div class="skills-grid">
+      <div class="skill-group reveal">
+        <div class="skill-group-title">Languages</div>
+        <div class="skill-list">
+          <span class="skill-chip">Java 8/11/17</span>
+          <span class="skill-chip">TypeScript</span>
+          <span class="skill-chip">JavaScript ES6+</span>
+          <span class="skill-chip">SQL</span>
+          <span class="skill-chip">HTML5/CSS3</span>
+        </div>
+      </div>
+      <div class="skill-group reveal">
+        <div class="skill-group-title">Frameworks</div>
+        <div class="skill-list">
+          <span class="skill-chip">Spring Boot</span>
+          <span class="skill-chip">Microservices</span>
+          <span class="skill-chip">Angular 12+</span>
+          <span class="skill-chip">Angular Material</span>
+          <span class="skill-chip">Bootstrap</span>
+        </div>
+      </div>
+      <div class="skill-group reveal">
+        <div class="skill-group-title">Data & Messaging</div>
+        <div class="skill-list">
+          <span class="skill-chip">Apache NiFi</span>
+          <span class="skill-chip">Oracle DB</span>
+          <span class="skill-chip">MySQL</span>
+          <span class="skill-chip">Kafka</span>
+          <span class="skill-chip">Redis</span>
+        </div>
+      </div>
+      <div class="skill-group reveal">
+        <div class="skill-group-title">Security</div>
+        <div class="skill-list">
+          <span class="skill-chip">OAuth2/OIDC</span>
+          <span class="skill-chip">Keycloak</span>
+          <span class="skill-chip">JWT</span>
+          <span class="skill-chip">RBAC</span>
+        </div>
+      </div>
+      <div class="skill-group reveal">
+        <div class="skill-group-title">Cloud & DevOps</div>
+        <div class="skill-list">
+          <span class="skill-chip">AWS (EC2/S3/RDS)</span>
+          <span class="skill-chip">Docker</span>
+          <span class="skill-chip">Jenkins</span>
+          <span class="skill-chip">GitHub Actions</span>
+          <span class="skill-chip">SonarQube</span>
+        </div>
+      </div>
+      <div class="skill-group reveal">
+        <div class="skill-group-title">Monitoring & Tools</div>
+        <div class="skill-list">
+          <span class="skill-chip">Dynatrace APM</span>
+          <span class="skill-chip">Matomo</span>
+          <span class="skill-chip">GitHub Copilot</span>
+          <span class="skill-chip">Jira</span>
+          <span class="skill-chip">Postman</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="section-label">About</div>
+    <div class="section-title">A Bit About Me</div>
+    <div class="about-grid reveal">
+      <div class="about-text">
+        <p>I'm a Full-Stack Engineer based in Bangalore, building enterprise-grade platforms that scale. My work spans the full stack — from building data pipelines with Apache NiFi and securing REST APIs with Keycloak to crafting responsive Angular UIs used by hundreds of warehouse operators daily.</p>
+        <p>I care deeply about system design — not just making things work, but making them work reliably at scale. I've led end-to-end delivery of systems processing over a million monthly events, driven critical performance fixes that took upload success from 70% to 99%, and mentored developers to grow their technical craft.</p>
+        <p>Outside of work, I'm always exploring new backend patterns, distributed systems concepts, and ways to write cleaner, more maintainable code.</p>
+      </div>
+      <div class="about-details">
+        <div class="detail-row"><span class="detail-key">Location</span><span class="detail-val">Bangalore, India</span></div>
+        <div class="detail-row"><span class="detail-key">Experience</span><span class="detail-val">6+ Years</span></div>
+        <div class="detail-row"><span class="detail-key">Current Role</span><span class="detail-val">Senior Technical Consultant</span></div>
+        <div class="detail-row"><span class="detail-key">Primary Stack</span><span class="detail-val">Java · Spring Boot · Angular</span></div>
+        <div class="detail-row"><span class="detail-key">Education</span><span class="detail-val">B.Tech EEE, Gitam University</span></div>
+        <div class="detail-row"><span class="detail-key">Status</span><span class="detail-val green">Open to High-Impact Engineering Opportunities</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="container">
+    <div class="section-label">Education</div>
+    <div class="section-title">Academic Background</div>
+    <div class="edu-card reveal">
+      <div class="edu-year">2014 – 2018</div>
+      <div>
+        <div class="edu-degree">Bachelor of Technology — Electrical & Electronics Engineering</div>
+        <div class="edu-university">Gitam University</div>
+        <div class="edu-location">Visakhapatnam, Andhra Pradesh</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 Suraj Mitra · Building reliable systems with clean architecture</p>
+  <div class="footer-links">
+    <a href="mailto:mitrasuraj.1996@gmail.com">Email</a>
+    <a href="https://www.linkedin.com/in/suraj-mitra-062046106/">LinkedIn</a>
+    <a href="tel:+918595635434">+91-8595635434</a>
+  </div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 80);
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
